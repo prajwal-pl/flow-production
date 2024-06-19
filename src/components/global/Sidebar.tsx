@@ -24,7 +24,9 @@ const Sidebar = (props: Props) => {
         <ul className="flex items-center justify-center md:gap-6 gap-3">
           {navigation.map((link) => (
             <Link
-              className={clsx("", { "text-primary": pathName === link.href })}
+              className={clsx("", {
+                "text-primary border-b border-primary": pathName === link.href,
+              })}
               key={link.title}
               href={link.href}
             >
@@ -36,7 +38,7 @@ const Sidebar = (props: Props) => {
       <aside className="flex gap-2 items-center">
         {
           <Image
-            className="rounded-full"
+            className="rounded-full "
             src={session.data?.user.image || ""}
             alt="profileImage"
             width={30}
