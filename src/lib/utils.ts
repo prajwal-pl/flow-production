@@ -20,6 +20,6 @@ export const navigation = [
   },
   {
     title: "Billing",
-    href: "/products",
+    href: "/billing",
   },
 ];
