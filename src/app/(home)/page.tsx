@@ -1,11 +1,9 @@
 import React from "react";
-import { auth } from "../../../auth";
 import Image from "next/image";
 
 type Props = {};
 
 const Home = async (props: Props) => {
-  const session = await auth();
   return (
     <>
       <section className="h-full w-full pt-36 relative flex items-center  justify-center flex-col -z-20">
