@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
 import { navigation } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,23 +16,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { LogOut, Settings, User } from "lucide-react";
-import toast from "react-hot-toast";
-import { UserButton } from "@clerk/nextjs";
+import { CreditCard, LogOut, Settings, User } from "lucide-react";
+import { signOut } from "../../../auth";
+import { SignOut } from "@/app/actions/auth.actions";
 
 type Props = {};
 
 const Sidebar = (props: Props) => {
   const pathName = usePathname();
+  const session = useSession();
   const router = useRouter();
 
-  const handleLogout = async () => {
-    toast.error(`successfully signed out!`);
-  };
-
-  //   if (!session.data?.user) {
-  //     router.push("/sign-up");
-  //   }
+  if (!session.data?.user) {
+    router.push("/sign-up");
+  }
 
   return (
     <div className="p-4 flex items-center justify-between sticky top-0 backdrop-blur-md backdrop-brightness-75 border-b">
@@ -56,7 +55,45 @@ const Sidebar = (props: Props) => {
         </ul>
       </nav>
       <aside className="flex gap-2 items-center">
-        <UserButton />
+        {session.data?.user && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Image
+                src={session.data.user.image || ""}
+                alt="profile pic"
+                className="rounded-full cursor-pointer shrink-0"
+                width={30}
+                height={30}
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  <span>Billing</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => SignOut()}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </aside>
     </div>
   );

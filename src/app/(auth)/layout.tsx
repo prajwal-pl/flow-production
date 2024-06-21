@@ -1,3 +1,4 @@
+import Navbar from "@/components/global/Navbar";
 import React, { ReactNode } from "react";
 
 type Props = {
@@ -6,7 +7,12 @@ type Props = {
 
 const AuthLayout = ({ children }: Props) => {
   return (
-    <div className="flex items-center justify-center h-screen">{children}</div>
+    <main>
+      <Navbar />
+      <div className="flex items-center justify-center h-screen">
+        {children}
+      </div>
+    </main>
   );
 };
 

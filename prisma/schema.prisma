@@ -24,6 +24,7 @@ model User {
   role          ROLE?           @default(USER)
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+  products      Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -82,4 +83,11 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model Product {
+  id     String @id @default(cuid())
+  name   String
+  userId String @unique
+  owner  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

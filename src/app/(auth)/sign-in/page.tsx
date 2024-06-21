@@ -1,14 +1,19 @@
 import { Button } from "@/components/ui/button";
+import { signIn } from "next-auth/react";
 import React from "react";
 
 type Props = {};
 
-const signIn = (props: Props) => {
+const SignIn = (props: Props) => {
   return (
-    <div>
-      <Button>Click Me</Button>
-    </div>
+    <Button
+      onClick={() => {
+        signIn("google", { redirect: true });
+      }}
+    >
+      Sign In
+    </Button>
   );
 };
 
-export default signIn;
+export default SignIn;
