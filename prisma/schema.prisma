@@ -86,8 +86,16 @@ model Authenticator {
 }
 
 model Product {
-  id     String @id @default(cuid())
-  name   String
-  userId String @unique
-  owner  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  tagLine     String
+  image       String
+  ratings     Decimal
+  userId      String   @unique
+  owner       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  price       Int
+  company     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

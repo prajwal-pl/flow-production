@@ -14,7 +14,7 @@ const Products = (props: Props) => {
         </h1>
         <SearchBar />
       </div>
-      <div className="mt-20 flex gap-3 items-center mx-[50px] justify-center flex-wrap">
+      <div className="flex gap-3 mt-20 mx-[50px] items-center justify-center flex-grow flex-wrap">
         <ProductCard />
         <ProductCard />
         <ProductCard />

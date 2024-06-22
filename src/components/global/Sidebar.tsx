@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { navigation } from "@/lib/utils";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -17,7 +17,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
-import { signOut } from "../../../auth";
 import { SignOut } from "@/app/actions/auth.actions";
 
 type Props = {};
@@ -25,11 +24,12 @@ type Props = {};
 const Sidebar = (props: Props) => {
   const pathName = usePathname();
   const session = useSession();
-  const router = useRouter();
 
-  if (!session.data?.user) {
-    router.push("/sign-up");
-  }
+  useEffect(() => {
+    if (!session.data?.user) {
+      window.location.href === "/sign-up";
+    }
+  }, []);
 
   return (
     <div className="p-4 flex items-center justify-between sticky top-0 backdrop-blur-md backdrop-brightness-75 border-b">
@@ -59,7 +59,7 @@ const Sidebar = (props: Props) => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Image
-                src={session.data.user.image || ""}
+                src={session.data?.user?.image || ""}
                 alt="profile pic"
                 className="rounded-full cursor-pointer shrink-0"
                 width={30}
@@ -72,15 +72,15 @@ const Sidebar = (props: Props) => {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
+                  <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CreditCard className="mr-2 h-4 w-4" />
-                  <span>Billing</span>
+                  <Link href="/subscriptions">Subscriptions</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
+                  <Link href="/settings">Settings</Link>{" "}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
