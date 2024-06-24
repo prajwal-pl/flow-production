@@ -43,9 +43,13 @@ const Sidebar = (props: Props) => {
         <ul className="flex items-center justify-center md:gap-6 gap-3">
           {navigation.map((link) => (
             <Link
-              className={clsx("", {
-                "text-primary border-b border-primary": pathName === link.href,
-              })}
+              className={clsx(
+                "hover:border-b hover:text-primary hover:py-5 hover:border-primary",
+                {
+                  "text-primary py-5 border-b border-primary hover:border-orange-400 hover:text-orange-400":
+                    pathName === link.href,
+                }
+              )}
               key={link.title}
               href={link.href}
             >
