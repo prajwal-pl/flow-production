@@ -12,11 +12,14 @@ const Profile = async (props: Props) => {
     <div className="">
       <div className="mt-3 ml-12">
         <h1 className="text-5xl font-semibold">Profile</h1>
+        <p className="dark:text-muted-foreground/50 text-muted-foreground/80  mt-2">
+          Update or revamp your username and public profile picture.
+        </p>
       </div>
       <div>{/* Uploadcare */}</div>
       <div className="">
         <form
-          className="flex flex-col gap-3 mx-[20px] md:ml-36 sm:w-[250px] my-36 md:w-[540px]"
+          className="flex flex-col gap-3 md:mx-[20px] mx-12 md:ml-12 sm:w-[250px] my-36 md:w-[540px]"
           action=""
         >
           <Label htmlFor="username">Username</Label>
