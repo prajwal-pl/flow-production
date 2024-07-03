@@ -19,6 +19,8 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.2.0",
+    "@uploadcare/blocks": "0.48.0",
+    "@uploadcare/react-uploader": "^0.6.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.395.0",
