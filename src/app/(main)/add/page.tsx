@@ -3,10 +3,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import React from "react";
 import UploadCareButton from "./_components/UploadCareButton";
+import { UploadButton } from "@/lib/uploadThing";
+import { Button } from "@/components/ui/button";
 
 type Props = {};
 
 const AddProduct = (props: Props) => {
+  //I want to convert this textarea into a markdown input
+
   return (
     <div>
       <div className="mt-3 ml-8">
@@ -16,7 +20,10 @@ const AddProduct = (props: Props) => {
         </p>
       </div>
       <div>
-        <form className="md:mx-36 mx-8 mt-8 space-y-3" action="">
+        <form
+          className="md:mx-36 mx-8 mt-10 md:mt-24 mb-12 space-y-4 md:space-y-6"
+          action=""
+        >
           <div className="flex gap-3">
             <div className="w-full">
               <label
@@ -45,7 +52,7 @@ const AddProduct = (props: Props) => {
               Description
             </label>
             <Textarea
-              rows={5}
+              rows={10}
               id="description"
               className="w-full"
               placeholder="Description of the product"
@@ -72,7 +79,25 @@ const AddProduct = (props: Props) => {
               <Input id="company" placeholder="Company of the product" />
             </div>
           </div>
-          <UploadCareButton />
+          <div className="flex flex-col gap-3">
+            <label className="text-sm font-medium text-muted-foreground">
+              Upload your product image
+            </label>
+            <UploadButton
+              className="ut-button:bg-orange-500 ut-button:text-black
+              ut-button:flex ut-button:w-full ut-allowed-content:hidden ut-readying:font-bold"
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                // Do something with the response
+                console.log("Files: ", res);
+              }}
+              onUploadError={(error: Error) => {
+                // Do something with the error.
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
+          <Button className="w-full">Add Product</Button>
         </form>
       </div>
     </div>
