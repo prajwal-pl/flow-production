@@ -25,6 +25,7 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   products      Product[]
+  orders        Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -94,8 +95,25 @@ model Product {
   ratings     Decimal
   userId      String   @unique
   owner       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  price       Int
+  price       Int      @default(0)
+  orders      Order[]
   company     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+enum ORDER_STATUS {
+  PAID
+  PENDING
+  UNPAID
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  productId String   @unique
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String   @unique
+  customer  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
