@@ -92,14 +92,14 @@ model Product {
   description String
   tagLine     String
   image       String
-  ratings     Decimal
-  userId      String   @unique
-  owner       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
+  owner       String?
   price       Int      @default(0)
   orders      Order[]
   company     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  User        User?    @relation(fields: [userId], references: [id])
 }
 
 enum ORDER_STATUS {

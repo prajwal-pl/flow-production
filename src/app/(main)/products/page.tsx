@@ -1,10 +1,16 @@
 import ProductCard from "@/components/global/ProductCard";
 import SearchBar from "@/components/global/SearchBar";
 import React from "react";
+import { auth } from "../../../../auth";
+import { redirect } from "next/navigation";
 
 type Props = {};
 
-const Products = (props: Props) => {
+const Products = async (props: Props) => {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
   return (
     <main>
       <div>

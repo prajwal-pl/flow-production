@@ -1,15 +1,41 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import React from "react";
+import React, { useState } from "react";
 import UploadCareButton from "./_components/UploadCareButton";
 import { UploadButton } from "@/lib/uploadThing";
 import { Button } from "@/components/ui/button";
+import prisma from "@/lib/db";
+import { useSession } from "next-auth/react";
+import { getOwner, productUpload } from "@/app/actions/productUpload.action";
 
 type Props = {};
 
 const AddProduct = (props: Props) => {
-  //I want to convert this textarea into a markdown input
+  const session = useSession();
+  const [input, setInput] = useState({
+    name: "",
+    tagline: "",
+    description: "",
+    price: 0,
+    company: "",
+    image: "",
+  });
+
+  const handleCLick = (e: any) => {
+    e.preventDefault();
+    productUpload({
+      name: input.name,
+      tagLine: input.tagline,
+      description: input.description,
+      price: input.price,
+      company: input.company,
+      image: input.image,
+      owner: session?.data?.user.name,
+      userId: session?.data?.user.id,
+    });
+    console.log(input);
+  };
 
   return (
     <div>
@@ -32,7 +58,12 @@ const AddProduct = (props: Props) => {
               >
                 Name
               </label>
-              <Input id="name" placeholder="Name of the product" />
+              <Input
+                value={input.name}
+                onChange={(e) => setInput({ ...input, name: e.target.value })}
+                id="name"
+                placeholder="Name of the product"
+              />
             </div>
             <div className="w-full">
               <label
@@ -41,7 +72,14 @@ const AddProduct = (props: Props) => {
               >
                 Tagline
               </label>
-              <Input id="tagline" placeholder="Tagline of the product" />
+              <Input
+                value={input.tagline}
+                onChange={(e) =>
+                  setInput({ ...input, tagline: e.target.value })
+                }
+                id="tagline"
+                placeholder="Tagline of the product"
+              />
             </div>
           </div>
           <div>
@@ -52,6 +90,10 @@ const AddProduct = (props: Props) => {
               Description
             </label>
             <Textarea
+              value={input.description}
+              onChange={(e) => {
+                setInput({ ...input, description: e.target.value });
+              }}
               rows={10}
               id="description"
               className="w-full"
@@ -66,7 +108,15 @@ const AddProduct = (props: Props) => {
               >
                 Price
               </label>
-              <Input id="price" placeholder="Price of the product" />
+              <Input
+                type="number"
+                value={input.price}
+                onChange={(e) =>
+                  setInput({ ...input, price: Number(e.target.value) })
+                }
+                id="price"
+                placeholder="Price of the product"
+              />
             </div>
 
             <div className="w-full">
@@ -76,7 +126,14 @@ const AddProduct = (props: Props) => {
               >
                 Company
               </label>
-              <Input id="company" placeholder="Company of the product" />
+              <Input
+                value={input.company}
+                onChange={(e) =>
+                  setInput({ ...input, company: e.target.value })
+                }
+                id="company"
+                placeholder="Company of the product"
+              />
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -89,6 +146,7 @@ const AddProduct = (props: Props) => {
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
                 // Do something with the response
+                setInput({ ...input, image: res[0].url });
                 console.log("Files: ", res);
               }}
               onUploadError={(error: Error) => {
@@ -97,7 +155,9 @@ const AddProduct = (props: Props) => {
               }}
             />
           </div>
-          <Button className="w-full">Add Product</Button>
+          <Button onClick={handleCLick} type="submit" className="w-full">
+            Add Product
+          </Button>
         </form>
       </div>
     </div>
