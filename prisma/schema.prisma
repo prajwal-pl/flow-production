@@ -109,11 +109,12 @@ enum ORDER_STATUS {
 }
 
 model Order {
-  id        String   @id @default(cuid())
-  productId String   @unique
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  userId    String   @unique
-  customer  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String       @id @default(cuid())
+  productId String       @unique
+  status    ORDER_STATUS @default(UNPAID)
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String       @unique
+  customer  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }

@@ -3,6 +3,7 @@ import SearchBar from "@/components/global/SearchBar";
 import React from "react";
 import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
+import prisma from "@/lib/db";
 
 type Props = {};
 
@@ -11,6 +12,8 @@ const Products = async (props: Props) => {
   if (!session?.user) {
     redirect("/sign-in");
   }
+  const products = await prisma.product.findMany();
+
   return (
     <main>
       <div>
@@ -18,15 +21,7 @@ const Products = async (props: Props) => {
           Explore the wide range of <br />
           <span className="text-primary">certified</span> products.
         </h1>
-        <SearchBar />
-      </div>
-      <div className="flex gap-3 mt-20 mx-[50px] items-center justify-center flex-grow flex-wrap">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <SearchBar products={products} />
       </div>
     </main>
   );
