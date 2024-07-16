@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
-import { SignOut } from "@/app/actions/auth.actions";
+import { getRole, SignOut } from "@/app/actions/auth.actions";
 
 type Props = {};
 
@@ -25,12 +25,22 @@ const Sidebar = (props: Props) => {
   const pathName = usePathname();
   const session = useSession();
 
+  // const user = session.data?.user;
+  // const acceptRole = async () => {
+  //   const role = await getRole();
+  //   return role;
+  //   console.log(role);
+  // };
+
+  // const role = acceptRole();
+
   useEffect(() => {
     if (!session.data?.user) {
       window.location.href === "/sign-up";
     }
   }, []);
-
+  console.log(session.data?.user);
+  console.log(session.data?.user.role);
   return (
     <div className="p-4 flex items-center justify-between sticky top-0 backdrop-blur-md backdrop-brightness-75 border-b">
       <aside className="flex items-center gap-2">
@@ -57,6 +67,20 @@ const Sidebar = (props: Props) => {
             </Link>
           ))}
         </ul>
+        {session.data?.user.role === "ADMIN" && (
+          <Link
+            href="/add"
+            className={clsx(
+              "hover:border-b hover:text-primary hover:py-5 hover:border-primary",
+              {
+                "text-primary py-5 border-b border-primary hover:border-orange-400 hover:text-orange-400":
+                  pathName === "/add",
+              }
+            )}
+          >
+            Add
+          </Link>
+        )}
       </nav>
       <aside className="flex gap-2 items-center">
         {session.data?.user && (
@@ -86,6 +110,22 @@ const Sidebar = (props: Props) => {
                   <Settings className="mr-2 h-4 w-4" />
                   <Link href="/settings">Settings</Link>{" "}
                 </DropdownMenuItem>
+                {session.data?.user.role === "ADMIN" && (
+                  <DropdownMenuItem>
+                    <Link
+                      href="/add"
+                      className={clsx(
+                        "hover:border-b hover:text-primary hover:py-5 hover:border-primary",
+                        {
+                          "text-primary py-5 border-b border-primary hover:border-orange-400 hover:text-orange-400":
+                            pathName === "/add",
+                        }
+                      )}
+                    >
+                      Add
+                    </Link>
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem

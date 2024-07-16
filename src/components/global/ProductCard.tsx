@@ -26,13 +26,18 @@ const ProductCard = ({
   image,
   company,
 }: Props) => {
-  console.log(image);
   return (
     <main>
       <div>
-        <Card className="w-[300px] hover:bg-muted hover:dark:bg-muted-foreground/5 border border-black/25 dark:border-gray-600">
+        <Card className="w-[300px] max-h-[800px] h-full hover:bg-muted hover:dark:bg-muted-foreground/5 border border-black/25 dark:border-gray-600">
           <CardHeader className="space-y-3">
-            <Image src={image} alt="product image" width={300} height={300} />
+            <Image
+              src={image}
+              alt="product image max-w-full max-h-full"
+              className="object-scale-down h-64 w-80 flex items-center justify-center rounded-lg"
+              width={300}
+              height={300}
+            />
             <CardTitle className="text-center">{name}</CardTitle>
           </CardHeader>
           <CardContent>

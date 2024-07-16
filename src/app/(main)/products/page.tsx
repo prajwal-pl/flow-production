@@ -1,4 +1,3 @@
-import ProductCard from "@/components/global/ProductCard";
 import SearchBar from "@/components/global/SearchBar";
 import React from "react";
 import { auth } from "../../../../auth";
@@ -13,6 +12,16 @@ const Products = async (props: Props) => {
     redirect("/sign-in");
   }
   const products = await prisma.product.findMany();
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user.email || "",
+    },
+  });
+  console.log(user?.role);
+
+  if (!user?.role) {
+    redirect("/profile/role");
+  }
 
   return (
     <main>

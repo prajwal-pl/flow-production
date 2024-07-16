@@ -10,7 +10,7 @@ export const productUpload = async ({
   company,
   image,
   owner,
-  userId,
+  userMail,
 }: any) => {
   const newProduct = await prisma.product.create({
     data: {
@@ -21,7 +21,7 @@ export const productUpload = async ({
       company,
       image,
       owner,
-      userId,
+      userMail,
     },
   });
   return newProduct;
@@ -29,10 +29,37 @@ export const productUpload = async ({
 
 export const getOwner = async () => {
   const session = await auth();
+
   const Owner = prisma.user.findUnique({
     where: {
       id: session?.user.id,
     },
   });
   return Owner;
+};
+
+export const handleUserRole = async () => {
+  const session = await auth();
+
+  await prisma.user.update({
+    where: {
+      email: session?.user.email || "",
+    },
+    data: {
+      role: "USER",
+    },
+  });
+};
+
+export const handleSellerRole = async () => {
+  const session = await auth();
+
+  await prisma.user.update({
+    where: {
+      email: session?.user.email || "",
+    },
+    data: {
+      role: "SELLER",
+    },
+  });
 };

@@ -8,10 +8,14 @@ import { Button } from "@/components/ui/button";
 import prisma from "@/lib/db";
 import { useSession } from "next-auth/react";
 import { getOwner, productUpload } from "@/app/actions/productUpload.action";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 type Props = {};
 
 const AddProduct = (props: Props) => {
+  const { toast } = useToast();
+  const router = useRouter();
   const session = useSession();
   const [input, setInput] = useState({
     name: "",
@@ -32,11 +36,15 @@ const AddProduct = (props: Props) => {
       company: input.company,
       image: input.image,
       owner: session?.data?.user.name,
-      userId: session?.data?.user.id,
+    }).then(() => {
+      router.push("/products");
+      toast({
+        title: "Product Added",
+        description: "Product added successfully",
+        variant: "default",
+      });
     });
-    console.log(input);
   };
-
   return (
     <div>
       <div className="mt-3 ml-8">
@@ -147,7 +155,11 @@ const AddProduct = (props: Props) => {
               onClientUploadComplete={(res) => {
                 // Do something with the response
                 setInput({ ...input, image: res[0].url });
-                console.log("Files: ", res);
+                toast({
+                  title: "Product Image Uploaded",
+                  description: "Product image uploaded successfully",
+                  variant: "default",
+                });
               }}
               onUploadError={(error: Error) => {
                 // Do something with the error.

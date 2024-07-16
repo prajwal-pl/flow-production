@@ -21,7 +21,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  role          ROLE?           @default(USER)
+  role          ROLE?
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   products      Product[]
@@ -92,14 +92,14 @@ model Product {
   description String
   tagLine     String
   image       String
-  userId      String?
+  userMail    String?  @unique
   owner       String?
   price       Int      @default(0)
   orders      Order[]
   company     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  User        User?    @relation(fields: [userId], references: [id])
+  User        User?    @relation(fields: [userMail], references: [email])
 }
 
 enum ORDER_STATUS {
