@@ -8,8 +8,10 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 type Props = {
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -19,6 +21,7 @@ type Props = {
 };
 
 const ProductCard = ({
+  id,
   name,
   description,
   price,
@@ -46,7 +49,9 @@ const ProductCard = ({
               <h1 className="text-xl">{price}$</h1>
             </div>
             <p className="">{tagLine}</p>
-            <Button className="w-full mt-3">View More</Button>
+            <Link href={`/products/${id}`}>
+              <Button className="w-full mt-3">View More</Button>
+            </Link>
           </CardContent>
         </Card>
       </div>

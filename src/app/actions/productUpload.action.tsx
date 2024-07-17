@@ -1,6 +1,8 @@
 "use server";
 import prisma from "@/lib/db";
 import { auth } from "../../../auth";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const productUpload = async ({
   name,
@@ -24,6 +26,7 @@ export const productUpload = async ({
       userMail,
     },
   });
+  revalidatePath("/products");
   return newProduct;
 };
 
@@ -41,25 +44,33 @@ export const getOwner = async () => {
 export const handleUserRole = async () => {
   const session = await auth();
 
-  await prisma.user.update({
-    where: {
-      email: session?.user.email || "",
-    },
-    data: {
-      role: "USER",
-    },
-  });
+  await prisma.user
+    .update({
+      where: {
+        email: session?.user.email || "",
+      },
+      data: {
+        role: "USER",
+      },
+    })
+    .then(() => {
+      return redirect("/products");
+    });
 };
 
 export const handleSellerRole = async () => {
   const session = await auth();
 
-  await prisma.user.update({
-    where: {
-      email: session?.user.email || "",
-    },
-    data: {
-      role: "SELLER",
-    },
-  });
+  await prisma.user
+    .update({
+      where: {
+        email: session?.user.email || "",
+      },
+      data: {
+        role: "SELLER",
+      },
+    })
+    .then(() => {
+      return redirect("/products");
+    });
 };

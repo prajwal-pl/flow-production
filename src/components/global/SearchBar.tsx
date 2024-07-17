@@ -40,6 +40,7 @@ const SearchBar = ({ products }: Props) => {
           })
           .map((product: any) => (
             <ProductCard
+              id={product.id}
               key={product.id}
               name={product.name}
               description={product.description}
