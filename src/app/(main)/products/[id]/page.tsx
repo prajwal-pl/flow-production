@@ -17,7 +17,7 @@ const page = async (props: Props) => {
   });
   return (
     <div>
-      <ProductInfo product={product} />
+      <ProductInfo id={id} product={product} />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
-export function ProductInfo({ product }: any) {
+export function ProductInfo({ product, id }: any) {
   return (
     <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4 md:px-0">
       <div className="grid gap-4">
@@ -22,7 +22,9 @@ export function ProductInfo({ product }: any) {
         <div className="grid gap-4">
           <p className="text-2xl font-bold">${product?.price}</p>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <Button size="lg">Order Now</Button>
+            <Link href={`/products/${id}/purchase`}>
+              <Button size="lg">Order Now</Button>
+            </Link>
             {/* <Link
               href="#"
               className="text-primary underline hover:text-primary-foreground"
