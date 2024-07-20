@@ -1,9 +1,12 @@
 import { ProductDashboard } from "@/components/component/product-dashboard";
 import React from "react";
+import { auth } from "../../../../auth";
+import { UserDashboard } from "@/components/component/user-dashboard";
 
 type Props = {};
 
-const Dashboard = (props: Props) => {
+const Dashboard = async (props: Props) => {
+  const session = await auth();
   return (
     <div>
       <div className="mt-3 ml-8">
@@ -13,7 +16,13 @@ const Dashboard = (props: Props) => {
         </p>
       </div>
       <div>
-        <ProductDashboard />
+        {session?.user?.role === "SELLER" ? (
+          <ProductDashboard />
+        ) : (
+          <div className="max-w-5xl mx-auto mt-10">
+            <UserDashboard />
+          </div>
+        )}
       </div>
     </div>
   );
