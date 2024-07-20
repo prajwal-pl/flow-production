@@ -99,13 +99,14 @@ function Form({
       .confirmPayment({
         elements,
         confirmParams: {
-          return_url: `/stripe/purchase-success`,
+          return_url: `http://localhost:3000/stripe/purchase-success/${productId}`,
         },
       })
       .then(({ error }) => {
         if (error.type === "card_error" || error.type === "validation_error") {
           setErrorMessage(error.message);
         } else {
+          console.log(error);
           setErrorMessage("An unknown error occurred");
         }
       });

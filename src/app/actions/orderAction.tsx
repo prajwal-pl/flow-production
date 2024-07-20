@@ -12,12 +12,19 @@ export async function orderAction({
 }) {
   const session = await auth();
   const order = await prisma.order.create({
+    //@ts-ignore
     data: {
-      productId: productId,
-      userId: session?.user.id!,
+      product: {
+        connect: {
+          id: productId || undefined,
+        },
+      },
       status: "PAID",
-      product: product,
-      customer: session?.user as any,
+      customer: {
+        connect: {
+          id: session?.user.id!,
+        },
+      },
     },
   });
   return order;

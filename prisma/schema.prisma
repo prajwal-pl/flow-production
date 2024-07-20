@@ -110,10 +110,10 @@ enum ORDER_STATUS {
 
 model Order {
   id        String       @id @default(cuid())
-  productId String?      @unique
+  productId String?
   status    ORDER_STATUS @default(UNPAID)
   product   Product?     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  userId    String?      @unique
+  userId    String?
   customer  User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
