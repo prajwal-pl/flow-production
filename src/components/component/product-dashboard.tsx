@@ -124,7 +124,6 @@ export function ProductDashboard() {
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col items-center justify-center">
-            {/* <PiechartcustomChart className="w-full aspect-square md:w-[500px] md:h-[500px]" /> */}
             <AnalyticsPieChart />
             <div className="mt-4 text-center">
               <h3 className="text-2xl font-bold">

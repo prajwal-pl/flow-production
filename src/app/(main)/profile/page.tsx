@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import { auth } from "../../../../auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UploadButton } from "@/lib/uploadThing";
@@ -57,7 +56,6 @@ const Profile = (props: Props) => {
               ut-button:flex ut-button:w-full ut-allowed-content:hidden ut-readying:font-bold"
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
-                // Do something with the response
                 setInput({ ...input, image: res[0].url });
                 toast({
                   title: "Product Image Uploaded",
@@ -66,7 +64,6 @@ const Profile = (props: Props) => {
                 });
               }}
               onUploadError={(error: Error) => {
-                // Do something with the error.
                 alert(`ERROR! ${error.message}`);
               }}
             />
