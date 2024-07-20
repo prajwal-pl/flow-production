@@ -26,7 +26,9 @@ export function OrderPage({ product }: { product: any }) {
                 <div className="mt-4 text-muted-foreground">
                   <p>Estimated Delivery Date:</p>
                   <p className="font-medium">
-                    {new Date().toLocaleDateString()}
+                    {new Date(
+                      new Date().setDate(new Date().getDate() + 7)
+                    ).toLocaleDateString()}
                   </p>
                 </div>
               </div>
