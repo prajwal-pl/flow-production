@@ -90,7 +90,7 @@ const Navbar2 = ({ role }: Props) => {
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CreditCard className="mr-2 h-4 w-4" />
-                  <Link href="/subscriptions">Subscriptions</Link>
+                  <Link href="/billing">Subscriptions</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />

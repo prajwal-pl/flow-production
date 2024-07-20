@@ -1,9 +1,14 @@
+import { ComingSoon } from "@/components/component/coming-soon";
 import React from "react";
 
 type Props = {};
 
 const Billing = (props: Props) => {
-  return <div>Billing</div>;
+  return (
+    <div>
+      <ComingSoon />
+    </div>
+  );
 };
 
 export default Billing;
