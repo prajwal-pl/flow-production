@@ -80,3 +80,13 @@ export const handleSellerRole = async () => {
       return redirect("/products");
     });
 };
+
+export const getAllProducts = async () => {
+  const session = await auth();
+  const allProducts = await prisma.product.findFirst({
+    where: {
+      userMail: session?.user.email || "",
+    },
+  });
+  return allProducts;
+};

@@ -29,3 +29,15 @@ export async function orderAction({
   });
   return order;
 }
+
+export async function getOrders() {
+  const session = await auth();
+  const orders = await prisma.order.findMany({
+    where: {
+      product: {
+        userMail: session?.user.email || "",
+      },
+    },
+  });
+  return orders;
+}
