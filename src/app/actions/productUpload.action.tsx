@@ -14,6 +14,7 @@ export const productUpload = async ({
   owner,
   userMail,
 }: any) => {
+  const session = await auth();
   const newProduct = await prisma.product.create({
     data: {
       name,
@@ -24,6 +25,11 @@ export const productUpload = async ({
       image,
       owner,
       userMail,
+      User: {
+        connect: {
+          id: session?.user.id,
+        },
+      },
     },
   });
   revalidatePath("/products");

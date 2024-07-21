@@ -48,7 +48,9 @@ const ProductCard = ({
               <p className="text-muted-foreground">{company}</p>
               <h1 className="text-xl">{price}$</h1>
             </div>
-            <p className="">{tagLine}</p>
+            {/* a classname to limit the number of lines */}
+
+            <p className="line-clamp-2">{tagLine}</p>
             <Link href={`/products/${id}`}>
               <Button className="w-full mt-3">View More</Button>
             </Link>

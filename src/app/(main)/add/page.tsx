@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { getOwner, productUpload } from "@/app/actions/productUpload.action";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { Select } from "@/components/ui/select";
 
 type Props = {};
 

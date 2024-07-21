@@ -15,8 +15,19 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Image from "next/image";
-import { CreditCard, LogOut, Settings, User } from "lucide-react";
+import { CreditCard, LogOut, Menu, Settings, User, X } from "lucide-react";
 import { SignOut } from "@/app/actions/auth.actions";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
+import { Separator } from "../ui/separator";
 
 type Props = {
   role: string;
@@ -34,7 +45,53 @@ const Navbar2 = ({ role }: Props) => {
         </Link>
       </aside>
 
-      <nav className="md:block absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%]">
+      <div className="md:hidden flex justify-end mx-4 items-center w-full">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Menu className="" />
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle className="text-start">Menu</SheetTitle>
+              <SheetDescription className="text-start">
+                Navigate to the different sections of the app.
+              </SheetDescription>
+            </SheetHeader>
+            <div className="flex flex-col gap-4 my-8">
+              {navigation.map((link) => (
+                <SheetClose asChild>
+                  <Link
+                    className={clsx("hover:text-primary hover:py-5", {
+                      "text-primary hover:text-orange-400":
+                        pathName === link.href,
+                    })}
+                    key={link.title}
+                    href={link.href}
+                  >
+                    {link.title}
+                  </Link>
+                </SheetClose>
+              ))}
+              {role === "ADMIN" ||
+                (role === "SELLER" && (
+                  <SheetClose asChild>
+                    <Link
+                      href="/add"
+                      className={clsx("hover:text-primary", {
+                        "text-primary hover:text-orange-400":
+                          pathName === "/add",
+                      })}
+                    >
+                      Add
+                    </Link>
+                  </SheetClose>
+                ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <nav className="md:block hidden absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%]">
         <ul className="flex items-center justify-center md:gap-6 gap-3">
           {navigation.map((link) => (
             <Link
