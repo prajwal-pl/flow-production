@@ -59,13 +59,12 @@ const Navbar2 = ({ role }: Props) => {
             </SheetHeader>
             <div className="flex flex-col gap-4 my-8">
               {navigation.map((link) => (
-                <SheetClose asChild>
+                <SheetClose key={link.title} asChild>
                   <Link
                     className={clsx("hover:text-primary hover:py-5", {
                       "text-primary hover:text-orange-400":
                         pathName === link.href,
                     })}
-                    key={link.title}
                     href={link.href}
                   >
                     {link.title}
