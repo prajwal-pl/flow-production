@@ -89,7 +89,7 @@ function Form({
       .confirmPayment({
         elements,
         confirmParams: {
-          return_url: `http://localhost:3000/stripe/purchase-success/${productId}`,
+          return_url: `https://flow-prod.vercel.app/stripe/purchase-success/${productId}`,
         },
       })
       .then(({ error }) => {
