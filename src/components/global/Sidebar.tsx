@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { navigation } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -32,7 +32,7 @@ const Sidebar = async (props: Props) => {
   const role = user?.role || "USER";
 
   if (!session?.user) {
-    window.location.href === "/sign-up";
+    redirect("/sign-up");
   }
 
   return <Navbar2 role={role} />;
