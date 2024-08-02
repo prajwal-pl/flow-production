@@ -92,7 +92,7 @@ model Product {
   description String
   tagLine     String
   image       String
-  userMail    String?  @unique
+  userMail    String?
   owner       String?
   price       Int      @default(0)
   orders      Order[]
